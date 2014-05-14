@@ -8,6 +8,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.management.MBeanServer;
+import java.io.File;
 import java.lang.management.ManagementFactory;
 
 public class Application extends Controller {
@@ -19,7 +20,7 @@ public class Application extends Controller {
 
     public static Result go() {
 
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 100; i++) {
             DumbModel dumbModel = new DumbModel();
             dumbModel.text = "Hello";
             dumbModel.save();
@@ -32,6 +33,10 @@ public class Application extends Controller {
         QueryIterator<DumbModel> iterate = find.findIterate();
 
         System.out.println("CREATING HEAP DUMP");
+        File file = new File("heap-dump.snapshot");
+        if(file.exists())
+            file.delete();
+
         dumpHeap("heap-dump.snapshot", true);
 
         return ok("Done");
