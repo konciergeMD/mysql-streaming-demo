@@ -16,7 +16,7 @@ create table stream_test.play_evolutions (
 -- Create application user
 drop user stream_test_user@localhost;
 
-create user stream_test_user@localhost IDENTIFIED BY PASSWORD 'stream_test_user';
+create user stream_test_user@localhost IDENTIFIED BY 'stream_test_user';
 
 grant all on stream_test.* to stream_test_user@localhost;
 

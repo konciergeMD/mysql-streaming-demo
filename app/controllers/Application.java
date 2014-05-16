@@ -29,15 +29,23 @@ public class Application extends Controller {
         Model.Finder<Long, DumbModel> find =
                 new Model.Finder(Long.class, DumbModel.class);
 
+        find.setBufferFetchSizeHint(1);
         System.out.println("GETTING ITERATE");
-        QueryIterator<DumbModel> iterate = find.findIterate();
+        QueryIterator<DumbModel> iterate = find
+                .findIterate();
 
         System.out.println("CREATING HEAP DUMP");
         File file = new File("heap-dump.snapshot");
-        if(file.exists())
+        if (file.exists())
             file.delete();
 
         dumpHeap("heap-dump.snapshot", true);
+
+        while (iterate.hasNext()) {
+            iterate.next();
+        }
+
+        dumpHeap("heap-dump-after.snapshot", true);
 
         return ok("Done");
     }
