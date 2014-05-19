@@ -35,9 +35,7 @@ public class Application extends Controller {
                 .findIterate();
 
         System.out.println("CREATING HEAP DUMP");
-        File file = new File("heap-dump.snapshot");
-        if (file.exists())
-            file.delete();
+        deleteFile("heap-dump.snapshot");
 
         dumpHeap("heap-dump.snapshot", true);
 
@@ -45,9 +43,16 @@ public class Application extends Controller {
             iterate.next();
         }
 
+        deleteFile("heap-dump-after.snapshot");
         dumpHeap("heap-dump-after.snapshot", true);
 
         return ok("Done");
+    }
+
+    private static void deleteFile(String s) {
+        File file = new File(s);
+        if (file.exists())
+            file.delete();
     }
 
 

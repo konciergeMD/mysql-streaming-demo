@@ -6,7 +6,7 @@ libraryDependencies ++= Seq(
   javaJdbc,
   javaEbean,
   cache,
-  "org.avaje.ebeanorm" % "avaje-ebeanorm" % "3.3.2",
+  "org.avaje.ebeanorm" % "avaje-ebeanorm" % "3.3.3",
   "mysql" % "mysql-connector-java" % "5.1.30"
 )
 
