@@ -29,30 +29,20 @@ public class Application extends Controller {
         Model.Finder<Long, DumbModel> find =
                 new Model.Finder(Long.class, DumbModel.class);
 
-        find.setBufferFetchSizeHint(1);
-        System.out.println("GETTING ITERATE");
         QueryIterator<DumbModel> iterate = find
+                .select("id")
                 .findIterate();
 
         System.out.println("CREATING HEAP DUMP");
-        deleteFile("heap-dump.snapshot");
-
         dumpHeap("heap-dump.snapshot", true);
 
         while (iterate.hasNext()) {
             iterate.next();
         }
 
-        deleteFile("heap-dump-after.snapshot");
         dumpHeap("heap-dump-after.snapshot", true);
 
         return ok("Done");
-    }
-
-    private static void deleteFile(String s) {
-        File file = new File(s);
-        if (file.exists())
-            file.delete();
     }
 
 
@@ -64,6 +54,8 @@ public class Application extends Controller {
     private static volatile HotSpotDiagnosticMXBean hotspotMBean;
 
     static void dumpHeap(String fileName, boolean live) {
+        deleteFile(fileName);
+
         // initialize hotspot diagnostic MBean
         initHotspotMBean();
         try {
@@ -102,4 +94,9 @@ public class Application extends Controller {
         }
     }
 
+    private static void deleteFile(String s) {
+        File file = new File(s);
+        if (file.exists())
+            file.delete();
+    }
 }

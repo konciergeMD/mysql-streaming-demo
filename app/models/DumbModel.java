@@ -4,6 +4,8 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
 @Entity
 public class DumbModel extends Model {
@@ -12,5 +14,8 @@ public class DumbModel extends Model {
     public Long id;
 
     public String text;
+
+    @ManyToMany
+    public List<DumbRelationModel> relations;
 
 }
